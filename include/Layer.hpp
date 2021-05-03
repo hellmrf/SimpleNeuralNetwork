@@ -10,7 +10,7 @@ class Layer
 private:
     int size;
 
-    std::vector<Neuron *> neurons;
+    std::vector<Neuron> neurons;
 
 public:
     Layer(std::vector<double> topology);

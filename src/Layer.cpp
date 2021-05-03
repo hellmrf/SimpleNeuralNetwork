@@ -5,7 +5,7 @@ Layer::Layer(int size)
     this->size = size;
     for (uint i = 0; i < this->size; ++i)
     {
-        Neuron *n = new Neuron(0.00);
+        auto n = Neuron(0.00);
         this->neurons.push_back(n);
     }
 }
@@ -14,23 +14,19 @@ Layer::Layer(std::vector<double> layer)
     this->size = layer.size();
     for (uint i = 0; i < this->size; ++i)
     {
-        Neuron *n = new Neuron(layer[i]);
+        auto n = Neuron(layer[i]);
         this->neurons.push_back(n);
     }
 }
 
 Layer::~Layer()
 {
-    //TODO: verify this destructor.
-    // for (uint i = 0; i < neurons.size(); ++i)
-    // {
-    //     delete neurons[i];
-    // }
+    this->neurons.clear();
 }
 
 void Layer::setValue(uint idx, double value)
 {
-    this->neurons.at(idx)->setValue(value);
+    this->neurons.at(idx).setValue(value);
 }
 
 Matrix Layer::as_matrix(NeuronValueState state, bool column_matrix)
@@ -42,13 +38,13 @@ Matrix Layer::as_matrix(NeuronValueState state, bool column_matrix)
         switch (state)
         {
         case Value:
-            val = this->neurons[i]->getValue();
+            val = this->neurons[i].getValue();
             break;
         case Activated:
-            val = this->neurons[i]->getActivatedValue();
+            val = this->neurons[i].getActivatedValue();
             break;
         case Derived:
-            val = this->neurons[i]->getDerivedValue();
+            val = this->neurons[i].getDerivedValue();
             break;
         }
         if (column_matrix)
