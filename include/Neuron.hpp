@@ -1,6 +1,12 @@
 #pragma once
 #include <iostream>
 
+enum NeuronValueState
+{
+    Value,
+    Activated,
+    Derived
+};
 class Neuron
 {
 private:

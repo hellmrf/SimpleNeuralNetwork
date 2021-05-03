@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../include/Neuron.hpp"
 #include "../include/Matrix.hpp"
+#include "../include/NeuralNetwork.hpp"
 #include <random>
 
 int main(int, char **)
@@ -21,6 +22,13 @@ int main(int, char **)
     std::cout << "------------" << std::endl;
     std::cout << mat.transposed() << std::endl;
 
+    std::vector<int> topology{3, 2, 3};
+    std::vector<double> input{1., 0., 1.};
+
+    NeuralNetwork ann = NeuralNetwork(topology);
+    ann.setInputLayer(Layer(input));
+
+    std::cout << ann << std::endl;
     // std::cout << mat.getValue(0, 0) << std::endl;
 
     delete n;
