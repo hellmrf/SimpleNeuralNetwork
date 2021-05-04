@@ -28,6 +28,7 @@ Layer NeuralNetwork::getLayer(uint index) const
 
 void NeuralNetwork::setInputLayer(Layer layer)
 {
+    this->layers[0] = layer;
 }
 
 std::ostream &operator<<(std::ostream &os, const NeuralNetwork &ann)
