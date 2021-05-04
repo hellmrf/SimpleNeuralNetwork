@@ -16,6 +16,7 @@ public:
     Layer(int size);
     ~Layer();
     void setValue(uint index, double value);
+    void setValues(Eigen::RowVectorXd values);
 
     Eigen::MatrixXd as_matrix(NeuronValueState state = Value, bool column_matrix = false);
 };

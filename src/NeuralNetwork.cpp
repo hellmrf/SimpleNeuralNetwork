@@ -31,6 +31,28 @@ void NeuralNetwork::setInputLayer(Layer layer)
     this->layers[0] = layer;
 }
 
+/**
+ * TODO: write that
+ * 
+ */
+void NeuralNetwork::feedForward()
+{
+    // The first iteration needs de Values without actiavation.
+
+    auto xi = this->layers[0].as_matrix(Value, false);
+    auto Wi = this->weights[0];
+    Eigen::MatrixXd next_layer = xi * Wi;
+    this->layers[1].setValues(next_layer);
+
+    for (uint i = 1; i < this->layers.size() - 1; ++i)
+    {
+        auto xi = this->layers[i].as_matrix(Activated, false);
+        auto Wi = this->weights[i];
+        Eigen::MatrixXd next_layer = xi * Wi;
+        this->layers[i + 1].setValues(next_layer);
+    }
+}
+
 std::ostream &operator<<(std::ostream &os, const NeuralNetwork &ann)
 {
     bool begin = true;

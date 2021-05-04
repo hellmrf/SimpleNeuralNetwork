@@ -28,6 +28,13 @@ void Layer::setValue(uint idx, double value)
 {
     this->neurons.at(idx).setValue(value);
 }
+void Layer::setValues(Eigen::RowVectorXd values)
+{
+    for (uint i = 0; i < this->size; ++i)
+    {
+        this->neurons[i].setValue(values[i]);
+    }
+}
 
 Eigen::MatrixXd Layer::as_matrix(NeuronValueState state, bool column_matrix)
 {
