@@ -1,9 +1,9 @@
 #pragma once
-
 #define DEBUG_SHOW_LINE_WORKING std::cout << "\u001b[02m" << __FILE__ << ":" << __LINE__ << " I'm here" \
                                           << "\u001b[0m" << std::endl;
 #include <random>
 #include <iostream>
+#include <string>
 
 namespace Util
 {
@@ -24,4 +24,31 @@ namespace Util
 
         return dis(gen);
     }
+
+    namespace TColor
+    {
+        const std::string RESET = "\u001b[0m";
+
+        const std::string BLACK = "\u001b[30m";
+        const std::string RED = "\u001b[31m";
+        const std::string GREEN = "\u001b[32m";
+        const std::string YELLOW = "\u001b[33m";
+        const std::string BLUE = "\u001b[34m";
+        const std::string MAGENTA = "\u001b[35m";
+        const std::string CYAN = "\u001b[36m";
+        const std::string WHITE = "\u001b[37m";
+
+        const std::string bgBLACK = "\u001b[40m";
+        const std::string bgRED = "\u001b[41m";
+        const std::string bgGREEN = "\u001b[42m";
+        const std::string bgYELLOW = "\u001b[43m";
+        const std::string bgBLUE = "\u001b[44m";
+        const std::string bgMAGENTA = "\u001b[45m";
+        const std::string bgCYAN = "\u001b[46m";
+        const std::string bgWHITE = "\u001b[47m";
+
+        const std::string BOLD = "\u001b[1m";
+        const std::string UNDERLINE = "\u001b[4m";
+        const std::string REVERSED = "\u001b[7m";
+    } // namespace TColor
 }
