@@ -5,6 +5,10 @@ set (CMAKE_CXX_STANDARD 20)
 include(CTest)
 enable_testing()
 
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 file(GLOB_RECURSE HEADERS "src/*.hpp")
 
