@@ -4,12 +4,12 @@ A Simple Neural Network implemented in C++.
 
 ## Dependencies
 
-This project were built aiming minimal dependencies. However, Matrix arithmetic is a performance-critic thing, and the [Eigen](https://eigen.tuxfamily.org/) Library is _WAY_ faster than my naïve implementations.
+This project was built aiming minimal dependencies. However, Matrix arithmetic is a performance-critic thing, and the [Eigen](https://eigen.tuxfamily.org/) Library is _WAY_ faster than my naïve implementations.
 
 You should install Eigen. In Ubuntu/Debian, you would do:
 
 ```shell
-sudo apt install libeigen3-dev
+$ sudo apt install libeigen3-dev
 ```
 
 and that's all.
