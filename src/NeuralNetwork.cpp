@@ -56,12 +56,11 @@ void NeuralNetwork::feedForward()
 std::ostream &operator<<(std::ostream &os, const NeuralNetwork &ann)
 {
     bool begin = true;
-    // for (auto layer : ann.layers)
-    os << "[1]  " << ann.getLayer(0).as_matrix(Value, false) << std::endl;
-    for (uint i = 1; i < ann.layers.size(); ++i)
-    {
-        os << "[" << i + 1 << "]  " << ann.getLayer(i).as_matrix(Activated, false) << std::endl;
-    }
+    os << Util::TColor::BLUE << " Input layer [1]  " << Util::TColor::RESET << ann.getLayer(0).as_matrix(Value, false) << std::endl;
+    auto num_layers = ann.layers.size();
+    for (uint i = 1; i < num_layers - 1; ++i)
+        os << Util::TColor::BLUE << "Hidden layer [" << i + 1 << "]  " << Util::TColor::RESET << ann.getLayer(i).as_matrix(Activated, false) << std::endl;
+    os << Util::TColor::BLUE << "Output layer [" << num_layers << "]  " << Util::TColor::RESET << ann.getLayer(num_layers - 1).as_matrix(Activated, false) << std::endl;
 
     return os;
 }
