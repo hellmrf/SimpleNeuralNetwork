@@ -18,12 +18,10 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const Matrix &mat);
 
-    const int *size() const
+    std::array<int, 2> size() const
     {
-        int *p = new int[2];
-        p[0] = this->m;
-        p[1] = this->n;
-        return p;
+        std::array<int, 2> sz{this->m, this->n};
+        return sz;
     }
 
 private:
