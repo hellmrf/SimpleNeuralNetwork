@@ -2,9 +2,8 @@
 
 #include <iostream>
 #include <vector>
+#include <Eigen/Dense>
 #include "Neuron.hpp"
-#include "Matrix.hpp"
-
 class Layer
 {
 private:
@@ -18,5 +17,5 @@ public:
     ~Layer();
     void setValue(uint index, double value);
 
-    Matrix as_matrix(NeuronValueState state = Value, bool column_matrix = false);
+    Eigen::MatrixXd as_matrix(NeuronValueState state = Value, bool column_matrix = false);
 };

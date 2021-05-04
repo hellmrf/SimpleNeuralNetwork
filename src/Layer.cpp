@@ -29,9 +29,9 @@ void Layer::setValue(uint idx, double value)
     this->neurons.at(idx).setValue(value);
 }
 
-Matrix Layer::as_matrix(NeuronValueState state, bool column_matrix)
+Eigen::MatrixXd Layer::as_matrix(NeuronValueState state, bool column_matrix)
 {
-    auto mat = column_matrix ? Matrix(this->size, 1) : Matrix(1, this->size);
+    auto mat = column_matrix ? Eigen::MatrixXd(this->size, 1) : Eigen::MatrixXd(1, this->size);
     for (uint i = 0; i < this->size; ++i)
     {
         double val;
@@ -48,9 +48,9 @@ Matrix Layer::as_matrix(NeuronValueState state, bool column_matrix)
             break;
         }
         if (column_matrix)
-            mat.setValue(i, 0, val);
+            mat(i, 0) = val;
         else
-            mat.setValue(0, i, val);
+            mat(0, i) = val;
     }
     return mat;
 }

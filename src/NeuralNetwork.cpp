@@ -10,7 +10,7 @@ NeuralNetwork::NeuralNetwork(std::vector<int> topology)
     }
     for (uint i = 0; i < this->topology.size() - 1; ++i)
     {
-        auto m = Matrix(this->topology[i], this->topology[i + 1], true);
+        auto m = Eigen::MatrixXd::Random(this->topology[i], this->topology[i + 1]);
         this->weights.push_back(m);
     }
 }
@@ -35,17 +35,10 @@ std::ostream &operator<<(std::ostream &os, const NeuralNetwork &ann)
 {
     bool begin = true;
     // for (auto layer : ann.layers)
-    for (uint i = 0; i < ann.layers.size(); ++i)
+    os << "[1]  " << ann.getLayer(0).as_matrix(Value, false) << std::endl;
+    for (uint i = 1; i < ann.layers.size(); ++i)
     {
-        if (begin)
-        {
-            os << "[1]  " << ann.getLayer(i).as_matrix(Value, false);
-            begin = false;
-        }
-        else
-        {
-            os << "[" << i + 1 << "]  " << ann.getLayer(i).as_matrix(Activated, false);
-        }
+        os << "[" << i + 1 << "]  " << ann.getLayer(i).as_matrix(Activated, false) << std::endl;
     }
 
     return os;

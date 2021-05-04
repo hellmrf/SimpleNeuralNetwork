@@ -1,15 +1,15 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <Eigen/Dense>
 #include "Layer.hpp"
-#include "Matrix.hpp"
 
 class NeuralNetwork
 {
 private:
     std::vector<int> topology;
     std::vector<Layer> layers;
-    std::vector<Matrix> weights;
+    std::vector<Eigen::MatrixXd> weights;
     std::vector<double> inputLayer;
 
 public:
