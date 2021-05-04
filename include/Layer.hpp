@@ -8,7 +8,7 @@
 class Layer
 {
 private:
-    int size;
+    uint size;
 
     std::vector<Neuron> neurons;
 

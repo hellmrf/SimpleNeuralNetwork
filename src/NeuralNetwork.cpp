@@ -55,7 +55,6 @@ void NeuralNetwork::feedForward()
 
 std::ostream &operator<<(std::ostream &os, const NeuralNetwork &ann)
 {
-    bool begin = true;
     os << Util::TColor::BLUE << " Input layer [1]  " << Util::TColor::RESET << ann.getLayer(0).as_matrix(Value, false) << std::endl;
     auto num_layers = ann.layers.size();
     for (uint i = 1; i < num_layers - 1; ++i)
