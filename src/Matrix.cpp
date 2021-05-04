@@ -53,3 +53,25 @@ std::ostream &operator<<(std::ostream &os, const Matrix &mat)
     }
     return os;
 }
+Matrix operator*(Matrix &A, const Matrix &B)
+{
+    auto [m1, n1] = A.size();
+    auto [m2, n2] = B.size();
+    if (n1 != m2)
+    {
+        std::stringstream ss;
+        ss << "Dimensions not compatible. A(";
+        ss << m1 << ", " << n1 << ") * B(" << m2 << ", " << n2 << ").";
+        throw(DimensionMismatchException(ss.str()));
+    }
+    auto C = Matrix(m1, n2);
+    for (uint i = 0; i < m1; ++i)
+        for (uint j = 0; j < n2; ++j)
+            for (uint k = 0; k < n1; ++k)
+            {
+                double val = A.getValue(i, k) * B.getValue(k, j);
+                C.setValue(i, j, val);
+            }
+
+    return C;
+}
