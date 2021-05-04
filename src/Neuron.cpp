@@ -14,12 +14,12 @@ Neuron::~Neuron()
 
 void Neuron::activate()
 {
-    this->activatedValue = this->value / (1 + abs(this->value));
+    this->activatedValue = this->activation_function(this->value);
 }
 
 void Neuron::derive()
 {
-    this->derivedValue = this->activatedValue * (1 - this->activatedValue);
+    this->derivedValue = this->activation_function_derivative(this->activatedValue);
 }
 
 void Neuron::setValue(double val)
@@ -27,4 +27,9 @@ void Neuron::setValue(double val)
     this->value = val;
     activate();
     derive();
+}
+void Neuron::setActivationFunction(ActFunction function, ActFunction derivative)
+{
+    this->activation_function = std::move(function);
+    this->activation_function_derivative = std::move(derivative);
 }
