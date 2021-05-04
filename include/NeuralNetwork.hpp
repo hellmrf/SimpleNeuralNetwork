@@ -12,12 +12,14 @@ private:
     std::vector<Layer> layers;
     std::vector<Eigen::MatrixXd> weights;
     std::vector<double> inputLayer;
+    std::vector<double> target;
 
 public:
     NeuralNetwork(std::vector<int> topology);
     ~NeuralNetwork();
 
     void setInputLayer(Layer input);
+    void setTarget(std::vector<double> target);
     Layer getLayer(uint index) const;
     std::vector<double> getOutputLayer();
 
