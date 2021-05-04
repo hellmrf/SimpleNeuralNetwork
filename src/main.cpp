@@ -3,8 +3,7 @@
 #include <Eigen/Dense>
 #include "../include/Neuron.hpp"
 #include "../include/NeuralNetwork.hpp"
-#include <random>
-#include <Eigen/Dense>
+#include "Util.hpp"
 
 int main(int, char **)
 {

@@ -4,6 +4,7 @@
 #include <vector>
 #include <Eigen/Dense>
 #include "Neuron.hpp"
+#include "Util.hpp"
 class Layer
 {
 private:

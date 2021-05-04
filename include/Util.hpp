@@ -1,5 +1,7 @@
 #pragma once
 
+#define DEBUG_SHOW_LINE_WORKING std::cout << "\u001b[02m" << __FILE__ << ":" << __LINE__ << " I'm here" \
+                                          << "\u001b[0m" << std::endl;
 #include <random>
 #include <iostream>
 

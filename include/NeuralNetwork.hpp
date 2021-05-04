@@ -3,6 +3,7 @@
 #include <vector>
 #include <Eigen/Dense>
 #include "Layer.hpp"
+#include "Util.hpp"
 
 class NeuralNetwork
 {
