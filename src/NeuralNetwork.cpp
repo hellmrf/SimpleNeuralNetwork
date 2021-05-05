@@ -60,6 +60,34 @@ void NeuralNetwork::feedForward()
     }
 }
 
+Eigen::RowVectorXd NeuralNetwork::getOutputLayer(NeuronValueState state)
+{
+    return this->layers.back().as_matrix(state);
+}
+
+void NeuralNetwork::computeErrors()
+{
+    if (this->target.size() == 0)
+        throw(std::logic_error(StringStream::stringify("You should define the target vector before computing the errors. Use ", Util::TColor::BLUE, "NeuralNetwork::setTarget(std::vector<double> target)", Util::TColor::RESET, " to do so.")));
+    // Compute errors for each neuron
+    auto outputLayer = this->getOutputLayer(Activated);
+    this->outputErrors.clear();
+    for (uint i = 0; i < outputLayer.size(); ++i)
+    {
+        double err = pow(outputLayer[i] - this->target[i], 2);
+        this->outputErrors.push_back(err);
+    }
+
+    // Compute mean squared error
+    this->mean_error = 0.0;
+    for (auto err : this->outputErrors)
+        this->mean_error += err;
+    this->mean_error /= this->outputErrors.size();
+
+    // Push to historical errors
+    this->historicalErrors.push_back(this->mean_error);
+}
+
 std::ostream &operator<<(std::ostream &os, const NeuralNetwork &ann)
 {
     os << Util::TColor::BLUE << " Input layer [1]  " << Util::TColor::RESET << ann.getLayer(0).as_matrix(Value, false) << std::endl;
