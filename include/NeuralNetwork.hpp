@@ -8,14 +8,14 @@
 class NeuralNetwork
 {
 private:
-    std::vector<int> topology;
+    std::vector<uint> topology;
     std::vector<Layer> layers;
     std::vector<Eigen::MatrixXd> weights;
     std::vector<double> inputLayer;
     std::vector<double> target;
 
 public:
-    NeuralNetwork(std::vector<int> topology);
+    NeuralNetwork(std::vector<uint> topology);
     ~NeuralNetwork();
 
     void setInputLayer(Layer input);

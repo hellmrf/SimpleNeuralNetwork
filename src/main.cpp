@@ -13,7 +13,7 @@ int main(int, char **)
     std::cout << "Activated Val: " << n.getActivatedValue() << std::endl;
     std::cout << "Derived Val: " << n.getDerivedValue() << std::endl;
 
-    std::vector<int> topology{3, 2, 3};
+    std::vector<uint> topology{3, 2, 3};
     std::vector<double> input{1., 0., 1.};
 
     NeuralNetwork ann = NeuralNetwork(topology);

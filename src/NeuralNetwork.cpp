@@ -1,6 +1,6 @@
 #include "../include/NeuralNetwork.hpp"
 
-NeuralNetwork::NeuralNetwork(std::vector<int> topology)
+NeuralNetwork::NeuralNetwork(std::vector<uint> topology)
 {
     this->topology = topology;
     for (uint i = 0; i < this->topology.size(); ++i)
