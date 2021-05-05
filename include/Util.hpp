@@ -4,6 +4,7 @@
 #include <random>
 #include <iostream>
 #include <string>
+#include <Eigen/Dense>
 
 namespace Util
 {

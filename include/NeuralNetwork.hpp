@@ -11,11 +11,12 @@ private:
     std::vector<uint> topology;
     std::vector<Layer> layers;
     std::vector<Eigen::MatrixXd> weights;
+    std::vector<Eigen::MatrixXd> gradientMatrices;
     std::vector<double> target;
 
 public: // TODO: REMOVE THIS
     // Squared errors of each output neuron.
-    std::vector<double> outputErrors;
+    Eigen::RowVectorXd outputErrors;
     // Mean_error in this iteration
     double mean_error;
     // Error throughout net training
@@ -28,14 +29,16 @@ public:
     void setInputLayer(Layer input);
     void setTarget(std::vector<double> target);
     Layer getLayer(uint index) const;
+    uint numLayers() { return this->layers.size(); };
     Eigen::RowVectorXd getOutputLayer(NeuronValueState state);
 
-    std::vector<Eigen::MatrixXd> DEBUG_get_raw_weights()
+    Eigen::MatrixXd getWeights(uint layer_index)
     {
-        return this->weights;
+        return this->weights.at(layer_index);
     }
     void feedForward();
     void computeErrors();
+    void backPropagation();
 
     friend std::ostream &operator<<(std::ostream &os, const NeuralNetwork &ann);
 };

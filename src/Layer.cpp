@@ -2,8 +2,8 @@
 
 Layer::Layer(int size)
 {
-    this->size = size;
-    for (uint i = 0; i < this->size; ++i)
+    this->n_neurons = size;
+    for (uint i = 0; i < this->size(); ++i)
     {
         auto n = Neuron(0.00);
         this->neurons.push_back(n);
@@ -11,8 +11,8 @@ Layer::Layer(int size)
 }
 Layer::Layer(std::vector<double> layer)
 {
-    this->size = layer.size();
-    for (uint i = 0; i < this->size; ++i)
+    this->n_neurons = layer.size();
+    for (uint i = 0; i < this->size(); ++i)
     {
         auto n = Neuron(layer[i]);
         this->neurons.push_back(n);
@@ -30,7 +30,7 @@ void Layer::setValue(uint idx, double value)
 }
 void Layer::setValues(Eigen::RowVectorXd values)
 {
-    for (uint i = 0; i < this->size; ++i)
+    for (uint i = 0; i < this->size(); ++i)
     {
         this->neurons[i].setValue(values[i]);
     }
@@ -38,8 +38,8 @@ void Layer::setValues(Eigen::RowVectorXd values)
 
 Eigen::MatrixXd Layer::as_matrix(NeuronValueState state, bool column_matrix)
 {
-    auto mat = column_matrix ? Eigen::MatrixXd(this->size, 1) : Eigen::MatrixXd(1, this->size);
-    for (uint i = 0; i < this->size; ++i)
+    auto mat = column_matrix ? Eigen::MatrixXd(this->size(), 1) : Eigen::MatrixXd(1, this->size());
+    for (uint i = 0; i < this->size(); ++i)
     {
         double val;
         switch (state)

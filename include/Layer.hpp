@@ -8,7 +8,7 @@
 class Layer
 {
 private:
-    uint size;
+    uint n_neurons;
 
     std::vector<Neuron> neurons;
 
@@ -18,6 +18,7 @@ public:
     ~Layer();
     void setValue(uint index, double value);
     void setValues(Eigen::RowVectorXd values);
+    uint size() { return this->n_neurons; };
 
     Eigen::MatrixXd as_matrix(NeuronValueState state = Value, bool column_matrix = false);
 };
