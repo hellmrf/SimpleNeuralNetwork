@@ -52,3 +52,45 @@ namespace Util
         const std::string REVERSED = "\u001b[7m";
     } // namespace TColor
 }
+
+// Overload operator<< to print vectors!
+inline std::ostream &operator<<(std::ostream &os, const std::vector<double> &input)
+{
+    for (auto const &i : input)
+    {
+        os << i << " ";
+    }
+    return os;
+}
+
+class StringStream
+{
+private:
+    template <typename T>
+    typename std::enable_if<
+        false == std::is_convertible<T, std::string>::value,
+        std::string>::type static toStr(T const &val)
+    {
+        return std::to_string(val);
+    }
+
+    static std::string toStr(std::string const &val)
+    {
+        return val;
+    }
+
+public:
+    StringStream() = default;
+    ~StringStream() = default;
+
+    template <typename... Ts>
+    static std::string stringify(Ts const &...vals)
+    {
+        std::string stringify_string;
+        using unused = int[];
+
+        (void)unused{0, (stringify_string += StringStream::toStr(vals), 0)...};
+
+        return stringify_string;
+    }
+};

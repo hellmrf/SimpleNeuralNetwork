@@ -34,7 +34,7 @@ void NeuralNetwork::setInputLayer(Layer layer)
 void NeuralNetwork::setTarget(std::vector<double> target)
 {
     if (target.size() != this->topology.back())
-        throw(std::domain_error(std::string("The target vector needs to be of the same size as the last layer of the network.")));
+        throw(std::domain_error(StringStream::stringify("The target vector (", target.size(), ",) needs to be of the same size as the last layer of the network (", this->topology.back(), " neurons).")));
     else
         this->target = target;
 }
