@@ -47,3 +47,4 @@ _deps
 build/
 *.code-workspace
 *.old
+annotations/

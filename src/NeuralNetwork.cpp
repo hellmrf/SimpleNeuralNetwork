@@ -64,38 +64,36 @@ void NeuralNetwork::feedForward()
 }
 void NeuralNetwork::backPropagation()
 {
+    // Going from output layer to last hidden layer
     Eigen::RowVectorXd derived_output = this->getOutputLayer(Derived);
     Eigen::RowVectorXd gradient = derived_output.cwiseProduct(this->outputErrors);
     uint last_hidden_idx = this->layers.size() - 2;
     Eigen::RowVectorXd last_hidden_layer = this->layers[last_hidden_idx].as_matrix(Activated);
     Eigen::MatrixXd delta_output_to_hidden = (gradient.transpose() * last_hidden_layer).transpose();
-    Eigen::MatrixXd new_weights = this->getWeights(last_hidden_idx) - delta_output_to_hidden;
+    Eigen::MatrixXd new_weights = this->momentum * this->getWeights(last_hidden_idx) - this->learning_rate * delta_output_to_hidden;
     this->weights[last_hidden_idx] = new_weights;
+
     // Going from last hidden layer to input
     for (int i = last_hidden_idx; i > 0; --i)
     {
+        /* i is the current layer.
+           We're computing the deltas between the current layer and the left one. */
         Layer layer = this->getLayer(i);
         Layer left_layer = this->getLayer(i - 1);
         Eigen::RowVectorXd layer_deriv = layer.as_matrix(Derived);
-        Eigen::RowVectorXd layer_activ = layer.as_matrix(Activated);
         Eigen::MatrixXd weight_matrix = this->getWeights(i);
         Eigen::MatrixXd left_weight_matrix = this->getWeights(i - 1);
-        // Eigen::RowVectorXd derivedGrad = gradient * weight_matrix.transpose();
-        auto derivedGrad = Eigen::RowVectorXd(layer.size());
-        for (uint r = 0; r < weight_matrix.rows(); ++r)
-        {
-            double sum = 0;
-            for (uint c = 0; c < weight_matrix.cols(); ++c)
-            {
-                sum += gradient[c] * weight_matrix(r, c);
-            }
-            derivedGrad[r] = sum * layer_activ[r];
-        }
+
+        gradient *= weight_matrix.transpose();
+        gradient = gradient.cwiseProduct(layer_deriv);
+
+        // If the left layer is the input (0), we get the value Activated. Otherwise, we get it Derived.
         Eigen::RowVectorXd left_layer_neurons = (i - 1 == 0) ? left_layer.as_matrix(Activated) : left_layer.as_matrix(Derived);
-        Eigen::MatrixXd delta_weights = (derivedGrad.transpose() * left_layer_neurons).transpose();
-        Eigen::MatrixXd new_weights = left_weight_matrix - delta_weights;
-        this->weights[i - 1] = new_weights;
-        gradient = derivedGrad;
+
+        Eigen::MatrixXd delta_weights = left_layer_neurons.transpose() * gradient;
+
+        Eigen::MatrixXd new_weights = this->momentum * left_weight_matrix - this->learning_rate * delta_weights;
+        this->weights[i - 1] = new_weights; // :)
     }
 }
 
@@ -111,19 +109,21 @@ void NeuralNetwork::computeErrors()
     // Compute errors for each neuron
     auto outputLayer = this->getOutputLayer(Activated);
     this->outputErrors = Eigen::RowVectorXd(outputLayer.size());
+    this->outputMSE = Eigen::RowVectorXd(outputLayer.size());
     for (uint i = 0; i < outputLayer.size(); ++i)
     {
         // double err = pow(outputLayer[i] - this->target[i], 2);
         double err = outputLayer[i] - this->target[i];
         this->outputErrors[i] = err;
+        this->outputMSE[i] = 0.5 * pow(err, 2);
     }
 
     // Compute mean squared error
     this->mean_error = 0.0;
     const uint N = this->outputErrors.size();
     for (uint i = 0; i < N; ++i)
-        this->mean_error += this->outputErrors[i];
-    this->mean_error /= N;
+        this->mean_error += this->outputMSE[i];
+    this->mean_error = this->mean_error / N;
 
     // Push to historical errors
     this->historicalErrors.push_back(this->mean_error);

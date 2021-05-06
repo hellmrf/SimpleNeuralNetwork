@@ -15,12 +15,19 @@ private:
     std::vector<double> target;
 
 public: // TODO: REMOVE THIS
-    // Squared errors of each output neuron.
+    // Raw errors of each output neuron.
     Eigen::RowVectorXd outputErrors;
+    // Squared errors of each output neuron.
+    Eigen::RowVectorXd outputMSE;
+
     // Mean_error in this iteration
     double mean_error;
     // Error throughout net training
     std::vector<double> historicalErrors;
+
+    double learning_rate = 0.5;
+    double momentum = 1;
+    double bias = 1;
 
 public:
     NeuralNetwork(std::vector<uint> topology);
@@ -30,7 +37,7 @@ public:
     void setTarget(std::vector<double> target);
     Layer getLayer(uint index) const;
     uint numLayers() { return this->layers.size(); };
-    Eigen::RowVectorXd getOutputLayer(NeuronValueState state);
+    Eigen::RowVectorXd getOutputLayer(NeuronValueState state = Value);
 
     Eigen::MatrixXd getWeights(uint layer_index)
     {
