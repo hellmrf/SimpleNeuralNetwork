@@ -13,7 +13,7 @@ private:
     std::vector<Neuron> neurons;
 
 public:
-    Layer(std::vector<double> topology);
+    Layer(std::vector<double> layer);
     Layer(int size);
     ~Layer();
     void setValue(uint index, double value);
