@@ -6,6 +6,13 @@ Neuron::Neuron(double value)
     this->value = value;
     activate();
     derive();
+    // if (!activated)
+    // {
+    //     this->setActivationFunction([](double x) { return x; }, [](double x) { return 1; });
+    // }
+    // else
+    // {
+    // }
 }
 
 Neuron::~Neuron()

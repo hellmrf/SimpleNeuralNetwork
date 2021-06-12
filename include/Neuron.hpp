@@ -17,12 +17,16 @@ private:
     double value;
     double activatedValue;
     double derivedValue; // derivative of activatedValue
+
     // Fast Sigmoid Function
     // σ(x) = x / (1 + |x|)
-    ActFunction activation_function = [](double val) { return val / (1 + abs(val)); };
+    ActFunction activation_function = [](double val)
+    { return val / (1 + abs(val)); };
+
     // Derivative of the activation function
     // σ'(x) = σ(x) * (1 - σ(x))
-    ActFunction activation_function_derivative = [](double val) { return val * (1 - val); };
+    ActFunction activation_function_derivative = [](double val)
+    { return val * (1 - val); };
 
 public:
     Neuron(double value);
