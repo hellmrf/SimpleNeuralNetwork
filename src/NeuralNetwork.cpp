@@ -47,7 +47,7 @@ void NeuralNetwork::setTarget(std::vector<double> target)
  */
 void NeuralNetwork::feedForward()
 {
-    // The first iteration needs the Values without actiavation.
+    // The first iteration (input -> first layer) needs the Values without activation.
 
     auto xi = this->layers[0].as_matrix(Value, false);
     auto Wi = this->weights[0];
@@ -74,7 +74,7 @@ void NeuralNetwork::backPropagation()
     this->weights[last_hidden_idx] = new_weights;
 
     // Going from last hidden layer to input
-    for (int i = last_hidden_idx; i > 0; --i)
+    for (uint i = last_hidden_idx; i > 0; --i)
     {
         /* i is the current layer.
            We're computing the deltas between the current layer and the left one. */
@@ -88,7 +88,7 @@ void NeuralNetwork::backPropagation()
         gradient = gradient.cwiseProduct(layer_deriv);
 
         // If the left layer is the input (0), we get the value Activated. Otherwise, we get it Derived.
-        Eigen::RowVectorXd left_layer_neurons = (i - 1 == 0) ? left_layer.as_matrix(Activated) : left_layer.as_matrix(Derived);
+        Eigen::RowVectorXd left_layer_neurons = (i - 1 == 0) ? left_layer.as_matrix(Value) : left_layer.as_matrix(Activated);
 
         Eigen::MatrixXd delta_weights = left_layer_neurons.transpose() * gradient;
 
@@ -115,7 +115,7 @@ void NeuralNetwork::computeErrors()
         // double err = pow(outputLayer[i] - this->target[i], 2);
         double err = outputLayer[i] - this->target[i];
         this->outputErrors[i] = err;
-        this->outputMSE[i] = 0.5 * pow(err, 2);
+        this->outputMSE[i] = pow(err, 2);
     }
 
     // Compute mean squared error
